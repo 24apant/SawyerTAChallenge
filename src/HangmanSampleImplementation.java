@@ -35,7 +35,7 @@ import java.util.*;
  */
 
 
-public class Hangman {
+public class HangmanSampleImplementation {
     public static void main(String[] args) {
         // Welcome to the Hangman Game!
         System.out.println("Welcome to Hangman Game!");
@@ -68,11 +68,24 @@ public class Hangman {
             char guess = scanner.next().charAt(0);
 
             // TODO: Implement checkGuess function to check if the guessed letter is in the word.
-            // TODO: Update guessedLetters array accordingly.
-
+            if(checkGuess(secretWord, guess)){
+                // TODO: Update guessedLetters array accordingly.
+                for(int i = 0; i < secretWord.length(); i++){
+                    if(secretWord.charAt(i) == guess){
+                        guessedLetters[i] = true;
+                    }
+                }
+            }
             // TODO: Update wrongGuesses if the guess is incorrect.
+            else{
+                wrongGuesses += 1;
+            }
             // TODO: Check if the game is over using the isGameFinished function.
             // TODO: Display the final result - win or lose.
+
+            if(isGameFinished(secretWord, guessedLetters, wrongGuesses, maxWrongGuesses)){
+                return;
+            }
         }
 
 
@@ -90,18 +103,47 @@ public class Hangman {
     // TODO: Implement the displayWord function to display the current state of the word.
     public static void displayWord(String secretWord, boolean[] guessedLetters) {
         // TODO: Your code here
+        String msg = "";
+        for(int i = 0; i < secretWord.length(); i++){
+            if (guessedLetters[i]){
+                msg += secretWord.charAt(i);
+            }
+            else{
+                msg += '_';
+            }
+        }
+        System.out.println("Word: " + msg);
 
     }
 
     // TODO: Implement the checkGuess function to check if a guessed letter is in the word.
     public static boolean checkGuess(String secretWord, char guess) {
         // TODO: Your code here
+        for(char c: secretWord.toCharArray()){
+            if (guess == c){
+
+                return true;
+            }
+        }
         return false;
     }
 
     // TODO: Implement the isGameFinished function to check if the game is finished (win or lose).
     public static boolean isGameFinished(String secretWord, boolean[] guessedLetters, int wrongGuesses, int maxWrongGuesses) {
         // TODO: Your code here
+        int numTrue = 0;
+        for(boolean b: guessedLetters){
+            if(b){numTrue++;}
+        }
+
+        if (numTrue==guessedLetters.length){
+            System.out.println("Win!");
+            return true;
+        }
+        if(wrongGuesses >= maxWrongGuesses){
+            System.out.println("Lose!");
+            return true;
+        }
         return false;
     }
 }
