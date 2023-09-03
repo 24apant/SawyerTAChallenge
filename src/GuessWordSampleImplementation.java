@@ -64,13 +64,18 @@ public class GuessWordSampleImplementation {
 
             // Get a guess from the player.
             System.out.print("Enter a letter: ");
-            char guess = scanner.next().charAt(0);
+            String guess = scanner.next();
+            while (guess.length() != 1){
+                System.out.print("Enter a letter: ");
+                guess = scanner.next();
+            }
+            char letter = guess.toCharArray()[0];
 
             // TODO: Implement checkGuess function to check if the guessed letter is in the word.
-            if(checkGuess(secretWord, guess)){
+            if(checkGuess(secretWord, letter)){
                 // TODO: Update guessedLetters array accordingly.
                 for(int i = 0; i < secretWord.length(); i++){
-                    if(secretWord.charAt(i) == guess){
+                    if(secretWord.charAt(i) == letter){
                         guessedLetters[i] = true;
                     }
                 }
@@ -118,6 +123,7 @@ public class GuessWordSampleImplementation {
     // TODO: Implement the checkGuess function to check if a guessed letter is in the word.
     public static boolean checkGuess(String secretWord, char guess) {
         // TODO: Your code here
+        // Note: make sure to only allow 'guess' to b
         for(char c: secretWord.toCharArray()){
             if (guess == c){
 
@@ -137,10 +143,12 @@ public class GuessWordSampleImplementation {
 
         if (numTrue==guessedLetters.length){
             System.out.println("Win!");
+            System.out.println("The word was: " + secretWord);
             return true;
         }
         if(wrongGuesses >= maxWrongGuesses){
             System.out.println("Lose!");
+            System.out.println("The word was: " + secretWord);
             return true;
         }
         return false;

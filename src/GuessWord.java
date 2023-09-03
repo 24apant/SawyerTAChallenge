@@ -60,7 +60,12 @@ public class GuessWord {
 
             // Get a guess from the player.
             System.out.print("Enter a letter: ");
-            char guess = scanner.next().charAt(0);
+            String guess = scanner.next();
+            while (guess.length() != 1){
+                System.out.print("Enter a letter: ");
+                guess = scanner.next();
+            }
+            char letter = guess.toCharArray()[0];
 
             // TODO: Implement checkGuess function to check if the guessed letter is in the word.
             // TODO: Update guessedLetters array accordingly.
